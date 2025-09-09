@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: backend
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: your-dockerhub-username/backend:${BUILD_NUMBER} 
+        image: pankajdevops2403/backend:${BUILD_NUMBER} 
         ports:
         - containerPort: 3000
         env:

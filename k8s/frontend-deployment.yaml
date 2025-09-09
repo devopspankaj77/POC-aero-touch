@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: frontend
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: your-dockerhub-username/frontend:${BUILD_NUMBER} 
+        image: pankajdevops2403/frontend:${BUILD_NUMBER} 
         ports:
         - containerPort: 80
 ---
