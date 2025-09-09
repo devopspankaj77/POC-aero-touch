@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: your-dockerhub-username/frontend:1.0
+        image: your-dockerhub-username/frontend:${BUILD_NUMBER} 
         ports:
         - containerPort: 80
 ---

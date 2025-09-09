@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: your-dockerhub-username/backend:1.0
+        image: your-dockerhub-username/backend:${BUILD_NUMBER} 
         ports:
         - containerPort: 3000
         env:
@@ -27,4 +27,3 @@ spec:
         - name: MYSQL_DB
           value: mydb
 ---
-
