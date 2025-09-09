@@ -1,11 +1,10 @@
 name: CI/CD Build & Deploy
 
-# 👇 trigger on push to main branch
 on:
   push:
     branches:
       - main
-  workflow_dispatch:   # manual trigger bhi allow karega
+  workflow_dispatch:  # manual trigger bhi allow karega
 
 env:
   IMAGE_TAG: ${{ github.run_number }}
@@ -15,18 +14,22 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      # 1️⃣ Checkout repo
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # 3️⃣ Login to DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # 4️⃣ Build & push backend image
       - name: Build & push backend image
         uses: docker/build-push-action@v6
         with:
@@ -37,6 +40,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
+      # 5️⃣ Build & push frontend image
       - name: Build & push frontend image
         uses: docker/build-push-action@v6
         with:
@@ -47,26 +51,19 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ env.IMAGE_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
 
-  # deploy:
-  #   needs: build-and-push
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Install kubectl
-  #       uses: azure/setup-kubectl@v4
-  #       with:
-  #         version: 'latest'
+      # 6️⃣ Update k8s manifests with new image tags
+      - name: Update k8s manifests with new image tags
+        run: |
+          sed -i "s#image: .*/frontend:.*#image: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ env.IMAGE_TAG }}#" k8s/frontend.yaml
+          sed -i "s#image: .*/backend:.*#image: ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }}#" k8s/backend.yaml
 
-  #     - name: Restore kubeconfig from secret (base64)
-  #       run: |
-  #         mkdir -p $HOME/.kube
-  #         echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
-  #         chmod 600 $HOME/.kube/config
-
-  #     - name: Apply k8s manifests
-  #       run: |
-  #         kubectl apply -f k8s/
-
-  #     - name: Update deployments with new images
-  #       run: |
-  #         kubectl set image deployment/backend backend=${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }} --record || true
-  #         kubectl set image deployment/frontend frontend=${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ env.IMAGE_TAG }} --record || true
+      # 7️⃣ Commit & push updated manifests (ArgoCD will pick this up)
+      - name: Commit & Push updated manifests
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add k8s/
+          git commit -m "Update image tags to ${{ env.IMAGE_TAG }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
