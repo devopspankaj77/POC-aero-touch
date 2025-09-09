@@ -1,4 +1,7 @@
 name: CI/CD Build & Deploy
+permissions:
+  contents: write  # ye allow karega manifest commit & push
+
 
 on:
   push:
