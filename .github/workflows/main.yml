@@ -9,6 +9,7 @@ on:
 
 env:
   IMAGE_TAG: ${{ github.run_number }}
+  DOCKERHUB_USERNAME: pankajdevops2403
 
 jobs:
   build-and-push:
