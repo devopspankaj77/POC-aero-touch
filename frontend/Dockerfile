@@ -6,10 +6,10 @@ WORKDIR /app
 COPY package*.json ./
 
 # If you have package-lock.json
-RUN npm ci
+# RUN npm ci
 
 # If you don’t have package-lock.json yet
-# RUN npm install --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
 COPY . .
 RUN npm run build
