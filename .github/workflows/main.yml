@@ -26,25 +26,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  #     - name: Build & push backend image
-  #       uses: docker/build-push-action@v6
-  #       with:
-  #         context: ./backend
-  #         file: ./backend/Dockerfile
-  #         push: true
-  #         tags: |
-  #           ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }}
-  #           ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+      - name: Build & push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
-  #     - name: Build & push frontend image
-  #       uses: docker/build-push-action@v6
-  #       with:
-  #         context: ./frontend
-  #         file: ./frontend/Dockerfile
-  #         push: true
-  #         tags: |
-  #           ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ env.IMAGE_TAG }}
-  #           ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+      - name: Build & push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ env.IMAGE_TAG }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
 
   # deploy:
   #   needs: build-and-push
