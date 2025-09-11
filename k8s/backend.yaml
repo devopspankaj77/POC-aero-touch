@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  namespace: onetouch
 spec:
   replicas: 2
   selector:
@@ -14,16 +15,15 @@ spec:
     spec:
       containers:
       - name: backend
-        image: pankajdevops2403/backend:19
+        image: pankajdevops2403/backend:19   # <- tumhara backend image
         ports:
-        - containerPort: 3000
+        - containerPort: 5000
         env:
-        - name: MYSQL_HOST
-          value: mysql
-        - name: MYSQL_USER
-          value: root
-        - name: MYSQL_PASSWORD
-          value: root
-        - name: MYSQL_DB
-          value: mydb
----
+        - name: DB_HOST
+          value: "mysql"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "yourpassword"

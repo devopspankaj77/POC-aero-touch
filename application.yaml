@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/devopspankaj77/POC-aero-touch.git  # Git repo jaha tumhare manifests/helm chart hai
     targetRevision: main        # Git branch
-    path: k8s          # Repo ke andar folder path (jaha yaml files hain)
+    path: k8s         # Repo ke andar folder path (jaha yaml files hain)
 
   destination:
     server: https://kubernetes.default.svc  # ArgoCD ko batata hai ki kaunse cluster me deploy karna hai
