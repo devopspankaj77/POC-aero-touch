@@ -1,23 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp              # Application ka naam
-  namespace: argocd        # ArgoCD hamesha apne namespace (default: argocd) me manage karta hai
+  name: onetouch-3tier
+  namespace: argocd
 spec:
-  project: default         # ArgoCD project (default use kar sakte ho)
+  project: default
 
+  # Git repo jahan POC-aero-touch hai
   source:
-    repoURL: https://github.com/devopspankaj77/POC-aero-touch.git  # Git repo jaha tumhare manifests/helm chart hai
-    targetRevision: main        # Git branch
-    path: k8s         # Repo ke andar folder path (jaha yaml files hain)
+    repoURL: https://github.com/devopspankaj77/POC-aero-touch.git
+    targetRevision: main
+    path: k8s/
+    directory:
+      recurse: true   # ✅ Recursive mode ON, subfolders ke YAML bhi pick honge
 
   destination:
-    server: https://kubernetes.default.svc  # ArgoCD ko batata hai ki kaunse cluster me deploy karna hai
-    namespace: onetouch               # App deploy hone ka namespace
+    server: https://kubernetes.default.svc
+    namespace: onetouch
 
   syncPolicy:
     automated:
-      prune: true         # Agar Git se koi resource delete hota hai to cluster me bhi delete karega
-      selfHeal: true      # Agar cluster me koi config manually change kar do to Git ke state ke sath reconcile karega
+      prune: true       # Unused resources delete ho jayenge
+      selfHeal: true    # Drift automatically fix
     syncOptions:
-      - CreateNamespace=true   # Agar namespace nahi hai to create kar dega
+      - CreateNamespace=true
