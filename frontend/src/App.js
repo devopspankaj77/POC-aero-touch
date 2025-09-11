@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>🚀 Three-Tier Microservices Project</h1>
+      <h1>🚀 Three-Tier Microservices Project created by Pankaj Kumar Tiwari</h1>
       <h2>Frontend (React) connected to Backend (Node.js)</h2>
       <p><b>Backend says:</b> {message}</p>
     </div>

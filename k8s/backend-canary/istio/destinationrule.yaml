@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: backend
+  namespace: onetouch
+spec:
+  host: backend
+  subsets:
+    - name: primary
+      labels:
+        app: backend
+    - name: canary
+      labels:
+        app: backend
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
