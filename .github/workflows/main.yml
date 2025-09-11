@@ -58,7 +58,7 @@ jobs:
       - name: Update k8s manifests with new image tags
         run: |
           sed -i "s#image: .*/frontend:.*#image: ${{ secrets.DOCKERHUB_USERNAME }}/frontend:${{ env.IMAGE_TAG }}#" k8s/frontend.yaml
-          sed -i "s#image: .*/backend:.*#image: ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }}#" k8s/backend.yaml
+          sed -i "s#image: .*/backend:.*#image: ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ env.IMAGE_TAG }}#" k8s/backend-canary/backend.yaml
 
       # 7️⃣ Commit & push updated manifests (ArgoCD will pick this up)
       - name: Commit & Push updated manifests
