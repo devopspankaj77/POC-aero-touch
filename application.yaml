@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/devopspankaj77/POC-aero-touch.git
     targetRevision: main
-    path: k8s/
+    path: k8s
     directory:
       recurse: true   # ✅ Recursive mode ON, subfolders ke YAML bhi pick honge
 
