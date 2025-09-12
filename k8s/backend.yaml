@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: pankajdevops2403/backend:32
+        image: pankajdevops2403/backend:33
         ports:
         - containerPort: 3000
         env:
