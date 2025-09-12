@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: pankajdevops2403/frontend:30
+        image: pankajdevops2403/frontend:32
         ports:
         - containerPort: 80
         env:
