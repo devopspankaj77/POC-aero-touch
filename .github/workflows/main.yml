@@ -1,13 +1,13 @@
 name: CI/CD Build & Deploy
 permissions:
-  contents: write  # ye allow karega manifest commit & push
+  contents: write  # ye allow karega manifest commit & push 
 
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  # manual trigger bhi allow karega
+  workflow_dispatch:  # manual trigger bhi allow karega na
 
 env:
   IMAGE_TAG: ${{ github.run_number }}
