@@ -12,9 +12,8 @@ function App() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>🚀 Three-Tier Microservices Project created by Pankaj Kumar Tiwari</h1>
       <h2>Frontend (React) connected to Backend (Node.js)</h2>
-      <p><b>Backend says:</b> {message}</p>
+      <p><b>Backend says:</b> {JSON.stringify(message)}</p>
     </div>
   );
 }
-
 export default App;
