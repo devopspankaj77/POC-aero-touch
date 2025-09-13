@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
 
-  # Git repo jahan POC-aero-touch hai na
+  # Git repo jahan POC-aero-touch hai
   source:
     repoURL: https://github.com/devopspankaj77/POC-aero-touch.git
     targetRevision: main
